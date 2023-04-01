@@ -1,0 +1,15 @@
+- name: Copie du service systemd
+  ansible.builtin.copy:
+    src: promtail.service
+    dest: /etc/systemd/system/promtail.service
+    owner: root
+    group: root
+    mode: '0744'
+  become: True
+
+- name: Reload de la config de systemd
+  ansible.builtin.systemd:
+    daemon_reload: yes
+  become: True
+
+

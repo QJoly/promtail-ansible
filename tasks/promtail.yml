@@ -1,0 +1,44 @@
+- name: Creation dossier Promtail
+  ansible.builtin.file:
+    path: /opt/promtail
+    state: directory
+    owner: root
+    group: root
+  become: True
+
+- name: Telecharger archive promtail
+  get_url:
+    url: {{ promtail_agent_url }}
+    dest: /opt/promtail/promtail-linux-amd64.zip
+    mode: '0440'
+  become: True
+
+- name: Installation de unzip
+  apt: 
+    name: unzip
+    state: present
+  become: True
+
+- name: Desarchiver le zip de promtail
+  ansible.builtin.unarchive:
+    src: /opt/promtail/promtail-linux-amd64.zip
+    dest: /opt/promtail/
+    remote_src: True
+  become: True
+
+- name: Copie du fichier amd64
+  ansible.builtin.copy:
+    remote_src: true
+    src: "/opt/promtail/promtail-linux-amd64"
+    dest: "/opt/promtail/promtail"
+    owner: root
+    group: root
+    mode: '0775'
+  become: True
+
+- name: Créer une template pour la configuration de Promtail
+  ansible.builtin.template:
+    src: promtail-local-config.yaml.j2
+    dest: /opt/promtail/promtail-local-config.yaml
+  become: True
+  notify: Restart Promtail

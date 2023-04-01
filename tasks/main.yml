@@ -1,0 +1,8 @@
+---
+# tasks file for PromtailAgent
+
+- name: Include du service systemd
+  include_tasks: systemd.yml
+
+- name: Include de l'installation de Promtail
+  include_tasks: promtail.yml

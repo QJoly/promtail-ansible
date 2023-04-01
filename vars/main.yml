@@ -1,0 +1,4 @@
+---
+
+loki_url: "http://192.168.128.27:3100/loki/api/v1/push" 
+promtail_agent_url: "https://github.com/grafana/loki/releases/download/v2.4.1/promtail-linux-amd64.zip"

@@ -1,0 +1,8 @@
+---
+# handlers file for PromtailAgent
+
+- name: Restart Promtail
+  ansible.builtin.systemd:
+    state: restarted
+    name: promtail
+  become: yes
